@@ -5,7 +5,7 @@
 # and the result analysis can be controlled
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 17.01.2020 18:08
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 17.01.2020 18:23
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -93,6 +93,9 @@ cat <<EOF > ${CURRENTFILE}
 #You may write any matlab code here to control your sim
 import os
 import sys
+#These are here to keep the figures background in batch processing
+import matplotlib
+matplotlib.use('Agg')
 rootpath='$ROOTPATH'
 statusfile= rootpath + '/Python/' + os.path.splitext(os.path.basename(__file__))[0]+'.status' 
 picpath=rootpath + '/Pics';
