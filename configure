@@ -5,7 +5,7 @@
 # and the result analysis can be controlled
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 06.09.2018 14:27
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 17.01.2020 18:08
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -44,21 +44,16 @@ do
   esac
 done
 
-
-
 #THE PARAMETERS
 #These are the models you want to simulate with this file
 #VHDL not supported by v1.2
-PYTHONMODELS="[ 'py', 'sv', 'sv' ]"
+PYTHONMODELS="[ 'py', 'sv', 'vhdl', 'eldo' ]"
 ######
 
 # SET ALL VARIABLES AND PATHS RELATIVE TO THE CURRENT DESIGN
 # Design paths
-#Sets up THESDKHOME from gloabl setup file
+#Sets up THESDKHOME from gloabal setup file
 . ../../TheSDK.config
-#Default CONTROLLER is determined in TheSDK.config through TheSDK/configure 
-#You may override it here
-#CONTROLLER="MATLAB"
 
 # SET ALL VARIABLES AND PATHS RELATIVE TO THE CURRENT DESIGN
 ROOTPATH=`pwd`
@@ -87,12 +82,10 @@ fi
 #Defaults the directory name
 TOP_ENTITY=`basename $ROOTPATH`
 
-
-
 PYFILE=`echo ${TOP_ENTITY} | sed 's/\([^[:alnum:]]*\)//g'`
 if [ ${PYCONF} == "1" ]; then
 #############################################################################
-# Matlab command file generation
+# Python command file generation
 #############################################################################
 CURRENTFILE="${PYTHONPATH}/${PYFILE}.py"
 echo "Creating ${CURRENTFILE}"
@@ -196,14 +189,12 @@ Aalto University, School of Electrical Engineering\\\\marko.kosunen@aalto.fi}
 %\end{document}
 EOF
 
-if [ "${CONTROLLER}" == "MATLAB" ]; then
-    NMODS=`expr \`echo $MATLABMODELS | wc -w\` - 2`
-elif [ "${CONTROLLER}" == "PYTHON" ]; then
-    NMODS=`expr \`echo $PYTHONMODELS | wc -w\` - 2`
-fi
-
+#Calculate the number of models defined
+echo $PYTHONMODELS
+NMODS=`expr \`echo $PYTHONMODELS | wc -w\` - 2`
+RANGE=$(($NMODS-1))
 echo "Configuring slides for $NMODS models"
-for FILE in `eval echo {1..${NMODS}}`; do 
+for FILE in `eval echo {0..$(($NMODS-1))}`; do 
 cat <<EOF >> ${CURRENTFILE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[t]
