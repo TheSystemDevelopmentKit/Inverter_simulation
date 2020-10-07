@@ -5,7 +5,7 @@
 # and the result analysis can be controlled
 # in parametrized manner from this single file
 # Created by Marko Kosunen on 24.03.2015
-# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 17.01.2020 18:23
+# Last modification by Marko Kosunen, marko.kosunen@aalto.fi, 07.10.2020 16:01
 #############################################################################
 ##Function to display help with -h argument and to control 
 ##The configuration from the commnad line
@@ -46,8 +46,10 @@ done
 
 #THE PARAMETERS
 #These are the models you want to simulate with this file
-#VHDL not supported by v1.2
-PYTHONMODELS="[ 'py', 'sv', 'vhdl', 'eldo' ]"
+# As per Release 1.4 this sim config with eldo and spectre chained does not work.
+# Output of eldo/spectre is incompatible with the input of the inverter.
+#PYTHONMODELS="[ 'py', 'sv', 'vhdl', 'eldo' ]"
+PYTHONMODELS="[ 'py', 'sv', 'vhdl', 'spectre' ]"
 ######
 
 # SET ALL VARIABLES AND PATHS RELATIVE TO THE CURRENT DESIGN
